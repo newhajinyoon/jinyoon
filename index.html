@@ -1,69 +1,194 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="https://em-content.zobj.net/source/microsoft/379/waving-hand_1f44b.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter (as a fallback) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Korean Font: Pretendard -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
-    <title>Jinyoon</title>
-    <meta name="title" content="Jinyoon portfolio" />
-    <meta name="description" content="진윤의 포트폴리오" />
+    <!-- Favicon -->
+    <link rel="icon" href="https://em-content.zobj.net/source/microsoft/379/waving-hand_1f44b.png">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://imjinyoon.kro.kr/" />
-    <meta property="og:title" content="Jinyoon portfolio" />
-    <meta property="og:description" content="진윤의 포트폴리오" />
+    <!-- SEO and Social Media Meta Tags -->
+    <title>Jinyoon's Portfolio</title>
+    <meta name="title" content="Jinyoon's Portfolio" />
+    <meta name="description" content="진윤의 포트폴리오" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="http://imjinyoon.kro.kr/" />
-    <meta property="twitter:title" content="Jinyoon portfolio" />
-    <meta property="twitter:description" content="진윤의 포트폴리오" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://imjinyoon.kro.kr/" />
+    <meta property="og:title" content="Jinyoon's Portfolio" />
+    <meta property="og:description" content="진윤의 포트폴리오" />
+    <meta property="og:image" content="https://placehold.co/1200x630/1a1a1a/e0e0e0?text=Jinyoon's+Portfolio" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="http://imjinyoon.kro.kr/" />
+    <meta property="twitter:title" content="Jinyoon's Portfolio" />
+    <meta property="twitter:description" content="진윤의 포트폴리오" />
+    <meta property="twitter:image" content="https://placehold.co/1200x630/1a1a1a/e0e0e0?text=Jinyoon's+Portfolio" />
+
+    <style>
+        /* Custom styles to apply the Pretendard font and create the loading animation */
+        body {
+            font-family: 'Pretendard', 'Inter', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Loading Screen Styles */
+        .loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
+
+        .loading-spinner {
+            border: 6px solid #333;
+            border-top: 6px solid #007bff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Smooth scrolling behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
-<body>
-    <div class="loading-screen">
-        <div class="loading-spinner"></div>
-    </div>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#home">홈</a></li>
-                <li><a href="#contact">문의하기</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main id="home" class="horizontal-layout">
-        <div class="intro">
-            <h1>안녕하세요 👋</h1>
-            <h2>진윤, 그냥 개발자입니다.</h2>
-            <p class="subtitle">2019년부터 개발하고 있는, 개발자인 척하는 사람입니다.</p>
-        </div>
-        <div class="links">
-            <a href="https://github.com/newhajinyoon" target="_blank" class="card">
-                <img src="https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/github-512.png" alt="GitHub">
-                <span>GitHub</span>
-            </a>
-            <a href="https://www.youtube.com/@%EC%A7%84%EC%9C%A4%EC%9E%84" target="_blank" class="card">
-                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
-                <span>YouTube</span>
-            </a>
-        </div>
-    </main>
+<body class="antialiased">
 
-    <section id="contact" class="contact">
-        <h2>연락</h2>
-        <div class="contact-item">
-            <img src="https://cdn3d.iconscout.com/3d/free/thumb/free-discord-11514343-9351120.png?f=webp" alt="Discord">
-            <p>Discord - jinyoon</p>
-        </div>
-        <div class="contact-item">
-            <img src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png" alt="Email">
-            <p>Email - <a href="mailto:jinyoonbz@gmail.com">jinyoonbz@gmail.com</a></p>
-        </div>
-    </section>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+    </div>
 
-    <script src="scripts.js"></script>
+    <!-- Header Navigation -->
+    <header id="home" class="bg-black bg-opacity-50 backdrop-blur-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-center items-center">
+            <ul class="flex space-x-6 md:space-x-8">
+                <li><a href="#home" class="text-gray-300 hover:text-white transition duration-300">Home</a></li>
+                <li><a href="#links" class="text-gray-300 hover:text-white transition duration-300">Links</a></li>
+                <li><a href="#contact" class="text-gray-300 hover:text-white transition duration-300">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="h-[calc(100vh-64px)] min-h-[500px] flex flex-col justify-center items-center text-center p-6">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl md:text-7xl font-bold mb-4">안녕하세요 👋</h1>
+                <h2 class="text-3xl md:text-5xl font-semibold text-gray-200 mb-6">진윤, 그냥 개발자입니다.</h2>
+                <p class="text-lg md:text-xl text-gray-400">
+                    저는 2019년부터 코딩을 간단히 하고 있는 개발자인척 하는 사람입니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- Links Section -->
+        <section id="links" class="py-20 bg-[#1a1a1a]">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center mb-12">주요 활동</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    
+                    <!-- YouTube Card -->
+                    <a href="https://www.youtube.com/@%EC%A7%84%EC%9C%A4%EC%9E%84" target="_blank" rel="noopener noreferrer" class="bg-[#222] rounded-xl p-8 group hover:bg-[#2a2a2a] transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="flex items-center mb-4">
+                            <!-- YouTube SVG Icon -->
+                            <svg class="w-10 h-10 text-red-500 mr-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418 c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768 C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.861-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z"/></svg>
+                            <h3 class="text-2xl font-bold text-white">YouTube</h3>
+                        </div>
+                        <p class="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">다양한 영상 콘텐츠를 확인해보세요.</p>
+                    </a>
+
+                    <!-- GitHub Card -->
+                    <a href="https://github.com/newhajinyoon" target="_blank" rel="noopener noreferrer" class="bg-[#222] rounded-xl p-8 group hover:bg-[#2a2a2a] transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="flex items-center mb-4">
+                            <!-- GitHub SVG Icon -->
+                            <svg class="w-10 h-10 text-white mr-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
+                            <h3 class="text-2xl font-bold text-white">GitHub</h3>
+                        </div>
+                        <p class="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">개발 프로젝트와 소스 코드를 둘러보세요.</p>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl font-bold mb-8">연락</h2>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-10">
+                    
+                    <!-- Discord -->
+                    <div class="flex items-center space-x-3">
+                        <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6cc3c481a15a141738_icon_clyde_white_RGB.svg" alt="Discord Logo" class="w-8 h-8"/>
+                        <p class="text-lg text-gray-300">Discord - jinyoon</p>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="flex items-center space-x-3">
+                         <img src="https://www.vectorlogo.zone/logos/gmail/gmail-icon.svg" alt="Email Logo" class="w-8 h-8"/>
+                        <p class="text-lg text-gray-300">
+                            <a href="mailto:jinyoonbz@gmail.com" class="hover:text-blue-400 transition-colors duration-300">jinyoonbz@gmail.com</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1a1a] py-6">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; 2024 Jinyoon. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript to handle the loading screen fade-out effect
+        document.addEventListener("DOMContentLoaded", function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            // Ensure the loading screen is visible initially
+            if (loadingScreen) {
+                // Use a small timeout to ensure rendering before fading
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    // Hide the element after the transition completes
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                    }, 1000); // This should match the transition duration in CSS
+                }, 100); // A short delay of 100ms
+            }
+        });
+    </script>
+
 </body>
 </html>
