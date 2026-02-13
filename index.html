@@ -3,192 +3,636 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jinyoon | 우리말과 코딩</title>
+    <meta name="description" content="우리말・제주어・한글패치를 사랑하는 개발자 진윤의 포트폴리오">
+    <!-- 폰트: Pretendard -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <!-- 아이콘: Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
-    <!-- Tailwind CSS for modern styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Inter (as a fallback) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Custom Korean Font: Pretendard -->
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-
-    <!-- Favicon -->
-    <link rel="icon" href="https://em-content.zobj.net/source/microsoft/379/waving-hand_1f44b.png">
-
-    <!-- SEO 와 Social Media Meta Tags -->
-    <title>Jinyoon's Portfolio</title>
-    <meta name="title" content="Jinyoon's Portfolio" />
-    <meta name="description" content="진윤의 포트폴리오" />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://imjinyoon.kro.kr/" />
-    <meta property="og:title" content="Jinyoon's Portfolio" />
-    <meta property="og:description" content="진윤의 포트폴리오" />
-    <meta property="og:image" content="https://placehold.co/1200x630/1a1a1a/e0e0e0?text=Jinyoon's+Portfolio" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="http://imjinyoon.kro.kr/" />
-    <meta property="twitter:title" content="Jinyoon's Portfolio" />
-    <meta property="twitter:description" content="진윤의 포트폴리오" />
-    <meta property="twitter:image" content="https://placehold.co/1200x630/1a1a1a/e0e0e0?text=Jinyoon's+Portfolio" />
-
     <style>
-        /* Custom styles to apply the Pretendard font 와 create the loading animation */
+        :root {
+            /* Light Mode */
+            --bg-color: #f3f5f9;
+            --bg-gradient: radial-gradient(circle at 10% 20%, rgb(255, 243, 235) 0%, rgb(243, 245, 249) 90%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --text-main: #2d3436;
+            --text-sub: #636e72;
+            --primary: #ff7e36; /* 제주 감귤 */
+            --primary-gradient: linear-gradient(135deg, #ff9f43 0%, #ff7e36 100%);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark Mode */
+                --bg-color: #0f1115;
+                --bg-gradient: radial-gradient(circle at 50% 0%, #1a1d26 0%, #0f1115 100%);
+                --card-bg: rgba(30, 34, 42, 0.6);
+                --card-border: rgba(255, 255, 255, 0.08);
+                --text-main: #f1f2f6;
+                --text-sub: #a4b0be;
+                --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.2);
+                --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
+        
         body {
-            font-family: 'Pretendard', 'Inter', sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            background: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
         }
 
-        /* Loading Screen Styles */
-        .loading-screen {
+        /* Ambient Background Blob */
+        .blob {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            background-color: #121212;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 1s ease;
-        }
-
-        .loading-spinner {
-            border: 6px solid #333;
-            border-top: 6px solid #007bff;
+            top: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 126, 54, 0.15) 0%, rgba(0,0,0,0) 70%);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1.5s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(40px);
+            animation: float 10s infinite ease-in-out;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, 30px); }
+        }
+
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        /* Header */
+        header {
+            padding: 100px 0 60px;
+            text-align: center;
+            animation: fadeInDown 0.8s ease-out;
         }
         
-        /* Smooth scrolling behavior */
-        html {
-            scroll-behavior: smooth;
+        .profile-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 24px;
         }
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 40px; /* Squircle shape */
+            object-fit: cover;
+            border: 4px solid var(--card-bg);
+            box-shadow: var(--shadow-md);
+            background-image: url('https://github.com/newhajinyoon.png'); 
+            background-size: cover;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .profile-wrapper:hover .profile-img {
+            transform: scale(1.05) rotate(-3deg);
+        }
+
+        .status-badge {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: var(--primary-gradient);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            border: 3px solid var(--bg-color);
+            box-shadow: 0 4px 10px rgba(255, 126, 54, 0.4);
+        }
+
+        h1 { 
+            font-size: 2.8rem; 
+            font-weight: 800; 
+            margin-bottom: 12px; 
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, var(--text-main) 20%, var(--text-sub));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .tagline { 
+            font-size: 1.15rem; 
+            color: var(--text-sub); 
+            margin-bottom: 24px; 
+            font-weight: 500;
+        }
+        
+        .fact-box { 
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 126, 54, 0.08); 
+            color: var(--primary); 
+            padding: 8px 16px; 
+            border-radius: 100px; 
+            font-size: 0.95rem; 
+            font-weight: 600;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 126, 54, 0.15);
+        }
+
+        /* Social Links */
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(10px);
+        }
+        .social-btn i { font-size: 1.2rem; }
+        
+        .social-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            color: var(--primary);
+            border-color: rgba(255, 126, 54, 0.3);
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s 0.2s backwards;
+        }
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            color: var(--text-sub);
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 100px;
+            transition: all 0.3s;
+            font-weight: 600;
+            position: relative;
+        }
+        .filter-btn:hover { color: var(--text-main); background: rgba(0,0,0,0.03); }
+        
+        .filter-btn.active {
+            color: white;
+            background: var(--text-main);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        @media (prefers-color-scheme: dark) {
+            .filter-btn.active { background: var(--primary); color: white; }
+            .filter-btn:hover { background: rgba(255,255,255,0.05); }
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+            perspective: 1000px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            animation: fadeInUp 0.6s backwards;
+            /* Stagger animations via JS or nth-child logic below */
+        }
+        
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(255, 126, 54, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        
+        .icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            background: var(--bg-color);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .card h3 { 
+            font-size: 1.35rem; 
+            margin-bottom: 10px; 
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        .card p { 
+            color: var(--text-sub); 
+            font-size: 0.95rem; 
+            flex-grow: 1; 
+            margin-bottom: 24px; 
+            word-break: keep-all; 
+            line-height: 1.6;
+        }
+        
+        .tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            font-size: 0.8rem;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: rgba(100, 100, 100, 0.08);
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .links {
+            display: flex;
+            gap: 16px;
+            margin-top: auto;
+            border-top: 1px solid var(--card-border);
+            padding-top: 20px;
+        }
+        .link-btn {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.8;
+            transition: opacity 0.2s, color 0.2s;
+        }
+        .link-btn:hover { opacity: 1; color: var(--primary); }
+
+        /* Badge */
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-gradient);
+            color: white;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(255, 126, 54, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Toast */
+        #toast {
+            visibility: hidden;
+            min-width: 280px;
+            background-color: var(--text-main);
+            color: var(--bg-color);
+            text-align: center;
+            border-radius: 50px;
+            padding: 14px 24px;
+            position: fixed;
+            z-index: 999;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        #toast.show { visibility: visible; animation: toastUp 0.5s, toastDown 0.5s 2.5s forwards; }
+
+        @keyframes toastUp { from {bottom: 0; opacity: 0;} to {bottom: 40px; opacity: 1;} }
+        @keyframes toastDown { from {bottom: 40px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
-<body class="antialiased">
+<body>
+    <div class="blob"></div>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="profile-wrapper">
+                <div class="profile-img"></div>
+                <div class="status-badge"><i class="ri-code-s-slash-line"></i></div>
+            </div>
+            
+            <h1>안녕하세요, 진윤입니다</h1>
+            <p class="tagline">우리말・제주어・한글패치를 사랑하는 개발자</p>
+            
+            <div class="fact-box">
+                <i class="ri-flashlight-fill"></i>
+                <span>팩트: 우리말을 사랑하지만 국어 점수는 비밀 🤫</span>
+            </div>
 
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-spinner"></div>
+            <div class="socials">
+                <a href="https://github.com/newhajinyoon" target="_blank" class="social-btn">
+                    <i class="ri-github-fill"></i> GitHub
+                </a>
+                <a href="https://www.youtube.com/@asdfjinyoon" target="_blank" class="social-btn">
+                    <i class="ri-youtube-fill"></i> YouTube
+                </a>
+                <button onclick="copyDiscord()" class="social-btn">
+                    <i class="ri-discord-fill"></i> jinyoon
+                </button>
+            </div>
+        </header>
+
+        <!-- Filters -->
+        <nav class="filters">
+            <button class="filter-btn active" onclick="filterProjects('all')">전체보기</button>
+            <button class="filter-btn" onclick="filterProjects('jeju')">🍊 제주어</button>
+            <button class="filter-btn" onclick="filterProjects('korean')">🇰🇷 우리말</button>
+            <button class="filter-btn" onclick="filterProjects('game')">🎮 게임/패치</button>
+            <button class="filter-btn" onclick="filterProjects('media')">🎼 미디어/기타</button>
+        </nav>
+
+        <!-- Projects Grid -->
+        <main class="grid" id="projectGrid">
+            
+            <!-- Category: Jeju -->
+            <article class="card" data-category="jeju">
+                <div class="card-header">
+                    <div class="icon-box">🍊</div>
+                </div>
+                <h3>Jeju Dict (공식기반)</h3>
+                <p>제주도 공식 사전을 기반으로 첫가끝 변환을 거친 데이터베이스 및 검색 도구입니다.</p>
+                <div class="tags"><span class="tag">Data</span><span class="tag">Jeju</span></div>
+                <div class="links">
+                    <a href="https://github.com/newhajinyoon/jeju-dict" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                    <a href="https://newhajinyoon.github.io/jeju-dict/" target="_blank" class="link-btn"><i class="ri-external-link-line"></i> Demo</a>
+                </div>
+            </article>
+
+            <article class="card" data-category="jeju">
+                <div class="card-header">
+                    <div class="icon-box">⌨️</div>
+                </div>
+                <h3>Web Jeju Typer</h3>
+                <p>웹사이트에서 아래아(ㆍ) 등 제주어를 쉽게 입력할 수 있게 돕는 JS 라이브러리입니다.</p>
+                <div class="tags"><span class="tag">Library</span><span class="tag">JS</span></div>
+                <div class="links">
+                    <a href="https://github.com/newhajinyoon/web-jeju-typer" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                </div>
+            </article>
+
+            <article class="card" data-category="jeju">
+                <div class="card-header">
+                    <div class="icon-box">🧩</div>
+                </div>
+                <h3>제주어 퀴즈</h3>
+                <p>웹에서 즐기는 제주어 맞추기 퀴즈 게임입니다. 재미있게 방언을 배워보세요.</p>
+                <div class="tags"><span class="tag">Web Game</span><span class="tag">Edu</span></div>
+                <div class="links">
+                    <a href="https://github.com/newhajinyoon/jeju-quiz" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                </div>
+            </article>
+
+            <!-- Category: Korean -->
+            <article class="card" data-category="korean">
+                <div class="card-header">
+                    <div class="icon-box">✒️</div>
+                </div>
+                <h3>옛한글 툴 (Old Hangul)</h3>
+                <p>옛한글(고어) 처리를 위한 온라인 도구 모음입니다. 입력 및 변환을 지원합니다.</p>
+                <div class="tags"><span class="tag">Utility</span><span class="tag">Web</span></div>
+                <div class="links">
+                    <a href="https://oldhangul.kro.kr/" target="_blank" class="link-btn"><i class="ri-external-link-line"></i> Visit</a>
+                    <a href="https://github.com/newhajinyoon/yhhangul-tools" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                </div>
+            </article>
+
+            <article class="card" data-category="korean">
+                <div class="card-header">
+                    <div class="icon-box">🐍</div>
+                </div>
+                <h3>ez-hangul</h3>
+                <p>파이썬 환경에서 한글 처리를 쉽게 도와주는 기능 지원 라이브러리입니다.</p>
+                <div class="tags"><span class="tag">Python</span><span class="tag">Library</span></div>
+                <div class="links">
+                    <a href="https://github.com/newhajinyoon/ez-hangul" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                </div>
+            </article>
+
+            <article class="card" data-category="korean">
+                <div class="card-header">
+                    <div class="icon-box">🎨</div>
+                </div>
+                <h3>Uri Colorword</h3>
+                <p>우리말만의 고유하고 아름다운 색상 명칭을 찾아보고 선택할 수 있는 도구입니다.</p>
+                <div class="tags"><span class="tag">Design</span><span class="tag">Color</span></div>
+                <div class="links">
+                    <a href="https://github.com/newhajinyoon/uri-colorword" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                </div>
+            </article>
+
+            <!-- Category: Game -->
+            <article class="card" data-category="game">
+                <span class="badge">Official</span>
+                <div class="card-header">
+                    <div class="icon-box">🐱</div>
+                </div>
+                <h3>나오렴, 고양아</h3>
+                <p>스팀 출시 게임 'Come out cat'의 공식 한국어 번역을 담당했습니다.</p>
+                <div class="tags"><span class="tag">Translation</span><span class="tag">Steam</span></div>
+                <div class="links">
+                    <a href="https://store.steampowered.com/app/3930300/Come_out_cat" target="_blank" class="link-btn"><i class="ri-steam-fill"></i> Steam</a>
+                </div>
+            </article>
+
+            <article class="card" data-category="game">
+                <div class="card-header">
+                    <div class="icon-box">❤️</div>
+                </div>
+                <h3>Deltarune 한글패치</h3>
+                <p>인기 인디 게임 델타룬의 비공식 한국어 번역 프로젝트(DeltaruneKR)입니다.</p>
+                <div class="tags"><span class="tag">Game Mod</span><span class="tag">Team</span></div>
+                <div class="links">
+                    <a href="https://github.com/newhajinyoon/deltarunekr" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                </div>
+            </article>
+
+            <article class="card" data-category="game">
+                <div class="card-header">
+                    <div class="icon-box">🌏</div>
+                </div>
+                <h3>GitHub 한국어화</h3>
+                <p>GitHub의 인터페이스를 한국어로 사용할 수 있게 돕는 브라우저 확장 프로젝트입니다.</p>
+                <div class="tags"><span class="tag">Extension</span><span class="tag">Open Source</span></div>
+                <div class="links">
+                    <a href="https://github.com/newhajinyoon/github-korean" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                </div>
+            </article>
+
+            <article class="card" data-category="game">
+                <div class="card-header">
+                    <div class="icon-box">🗣️</div>
+                </div>
+                <h3>Undertale Dialog</h3>
+                <p>언더테일 한글 패치(1.08 버전)의 대사 덤프 자료 및 관련 데이터입니다.</p>
+                <div class="tags"><span class="tag">Data</span><span class="tag">Archive</span></div>
+                <div class="links">
+                    <a href="https://github.com/newhajinyoon/undertalekrdialouge" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                </div>
+            </article>
+
+             <!-- Category: Media/Etc -->
+             <article class="card" data-category="media">
+                <div class="card-header">
+                    <div class="icon-box">🥁</div>
+                </div>
+                <h3>국악기 SFZ</h3>
+                <p>전통 국악기 음원을 무료 사운드폰트(SFZ) 형식으로 패키징하여 배포하는 프로젝트입니다.</p>
+                <div class="tags"><span class="tag">Audio</span><span class="tag">Music</span></div>
+                <div class="links">
+                    <a href="https://newhajinyoon.github.io/Gugak-SFZ/" target="_blank" class="link-btn"><i class="ri-play-circle-line"></i> Demo</a>
+                    <a href="https://github.com/newhajinyoon/Gugak-SFZ" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                </div>
+            </article>
+
+            <article class="card" data-category="media">
+                <div class="card-header">
+                    <div class="icon-box">🥢</div>
+                </div>
+                <h3>A4 Taiko</h3>
+                <p>카메라 인식을 이용하여 나무젓가락으로 즐길 수 있는 '태고의 달인' 컨트롤러입니다.</p>
+                <div class="tags"><span class="tag">CV</span><span class="tag">Python</span></div>
+                <div class="links">
+                    <a href="https://github.com/newhajinyoon/a4-taiko" target="_blank" class="link-btn"><i class="ri-github-line"></i> GitHub</a>
+                </div>
+            </article>
+
+            <article class="card" data-category="media">
+                <div class="card-header">
+                    <div class="icon-box">🧪</div>
+                </div>
+                <h3>이색 언더테일 패치</h3>
+                <p>국한문혼용체, 동남방언 버전 등 게임을 색다르게 즐길 수 있는 재미있는 패치 실험입니다.</p>
+                <div class="tags"><span class="tag">Experiment</span><span class="tag">Fun</span></div>
+                <div class="links">
+                    <a href="https://www.youtube.com/@진윤임" target="_blank" class="link-btn"><i class="ri-youtube-line"></i> Watch</a>
+                </div>
+            </article>
+
+        </main>
     </div>
 
-    <!-- Header Navigation -->
-    <header id="home" class="bg-black bg-opacity-50 backdrop-blur-md sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-center items-center">
-            <ul class="flex space-x-6 md:space-x-8">
-                <li><a href="#home" class="text-gray-300 hover:text-white transition duration-300">홈</a></li>
-                <li><a href="#links" class="text-gray-300 hover:text-white transition duration-300">Links</a></li>
-                <li><a href="#contact" class="text-gray-300 hover:text-white transition duration-300">문의하기</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="h-[calc(100vh-64px)] min-h-[500px] flex flex-col justify-center items-center text-center p-6">
-            <div class="max-w-3xl">
-                <h1 class="text-5xl md:text-7xl font-bold mb-4">안녕하세요 👋</h1>
-                <h2 class="text-3xl md:text-5xl font-semibold text-gray-200 mb-6">윤하진, 그냥 개발자입니다.</h2>
-                <p class="text-lg md:text-xl text-gray-400">
-                    저는 2019년부터 코딩을 간단히 하고 있는 개발자인척 하는 사람입니다.
-                </p>
-            </div>
-        </section>
-
-        <!-- Links Section -->
-        <section id="links" class="py-20 bg-[#1a1a1a]">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center mb-12">주요 활동</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    
-                    <!-- YouTube Card -->
-                    <a href="https://www.youtube.com/@%EC%A7%84%EC%9C%A4%EC%9E%84" target="_blank" rel="noopener noreferrer" class="bg-[#222] rounded-xl p-8 group hover:bg-[#2a2a2a] transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="flex items-center mb-4">
-                            <!-- YouTube SVG Icon -->
-                            <svg class="w-10 h-10 text-red-500 mr-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418 c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768 C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.861-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z"/></svg>
-                            <h3 class="text-2xl font-bold text-white">YouTube</h3>
-                        </div>
-                        <p class="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">다양한 영상 콘텐츠를 확인해보세요.</p>
-                    </a>
-
-                    <!-- GitHub Card -->
-                    <a href="https://github.com/newhajinyoon" target="_blank" rel="noopener noreferrer" class="bg-[#222] rounded-xl p-8 group hover:bg-[#2a2a2a] transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="flex items-center mb-4">
-                            <!-- GitHub SVG Icon -->
-                            <svg class="w-10 h-10 text-white mr-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
-                            <h3 class="text-2xl font-bold text-white">GitHub</h3>
-                        </div>
-                        <p class="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">개발 프로젝트와 소스 코드를 둘러보세요.</p>
-                    </a>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="py-20">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl font-bold mb-8">연락</h2>
-                <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-10">
-                    
-                    <!-- Discord -->
-                    <div class="flex items-center space-x-3">
-                        <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6cc3c481a15a141738_icon_clyde_white_RGB.svg" alt="Discord Logo" class="w-8 h-8"/>
-                        <p class="text-lg text-gray-300">Discord - jinyoon</p>
-                    </div>
-
-                    <!-- Email -->
-                    <div class="flex items-center space-x-3">
-                         <img src="https://www.vectorlogo.zone/logos/gmail/gmail-icon.svg" alt="Email Logo" class="w-8 h-8"/>
-                        <p class="text-lg text-gray-300">
-                            <a href="mailto:jinyoonbz@gmail.com" class="hover:text-blue-400 transition-colors duration-300">jinyoonbz@gmail.com</a>
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-[#1a1a1a] py-6">
-        <div class="container mx-auto px-6 text-center text-gray-500">
-            <p>&copy; 2024 Jinyoon. All Rights Reserved.</p>
-        </div>
-    </footer>
+    <div id="toast"><i class="ri-check-line"></i> Discord ID 복사 완료!</div>
 
     <script>
-        // JavaScript to handle the loading screen fade-out effect
-        document.addEventListener("DOMContentLoaded", function() {
-            const loadingScreen = document.getElementById('loading-screen');
-            // Ensure the loading screen is visible initially
-            if (loadingScreen) {
-                // Use a small timeout to ensure rendering before fading
-                setTimeout(() => {
-                    loadingScreen.style.opacity = '0';
-                    // Hide the element after the transition completes
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                    }, 1000); // This should match the transition duration in CSS
-                }, 100); // A short delay of 100ms
-            }
+        // 카드 등장 애니메이션 딜레이 자동 적용
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.05}s`;
+            });
         });
-    </script>
 
+        // 필터링 기능
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.card');
+            const btns = document.querySelectorAll('.filter-btn');
+            
+            // 버튼 스타일
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // 카드 필터링
+            cards.forEach(card => {
+                const match = category === 'all' || card.dataset.category === category;
+                if (match) {
+                    card.style.display = 'flex';
+                    // Re-trigger animation for effect
+                    card.style.animation = 'none';
+                    card.offsetHeight; /* trigger reflow */
+                    card.style.animation = 'fadeInUp 0.5s ease-out forwards';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 디스코드 ID 복사
+        function copyDiscord() {
+            const discordId = "jinyoon";
+            navigator.clipboard.writeText(discordId).then(() => {
+                const toast = document.getElementById("toast");
+                toast.className = "show";
+                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+            });
+        }
+    </script>
 </body>
 </html>
