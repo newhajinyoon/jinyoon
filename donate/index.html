@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>후원하기 | Jinyoon</title>
+    <meta name="description" content="진윤의 우리말과 코딩 프로젝트를 후원해주세요.">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f3f5f9;
+            --bg-gradient: radial-gradient(circle at 10% 20%, rgb(255, 243, 235) 0%, rgb(243, 245, 249) 90%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --text-main: #2d3436;
+            --text-sub: #636e72;
+            --primary: #ff7e36;
+            --primary-gradient: linear-gradient(135deg, #ff9f43 0%, #ff7e36 100%);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f1115;
+                --bg-gradient: radial-gradient(circle at 50% 0%, #1a1d26 0%, #0f1115 100%);
+                --card-bg: rgba(30, 34, 42, 0.6);
+                --card-border: rgba(255, 255, 255, 0.08);
+                --text-main: #f1f2f6;
+                --text-sub: #a4b0be;
+                --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.2);
+                --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
+        
+        body {
+            background: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        .blob {
+            position: fixed;
+            top: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 126, 54, 0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(40px);
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, 30px); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        .top-nav {
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out backwards;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-sub);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 100px;
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            color: var(--text-main);
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out 0.1s backwards;
+        }
+
+        .heart-icon {
+            font-size: 3.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+            display: inline-block;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        h1 { 
+            font-size: 2.4rem; 
+            font-weight: 800; 
+            margin-bottom: 12px; 
+            letter-spacing: -0.02em;
+        }
+
+        .tagline { 
+            font-size: 1.1rem; 
+            color: var(--text-sub); 
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s backwards;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: var(--bg-color);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        h2 { font-size: 1.4rem; font-weight: 700; color: var(--text-main); }
+
+        .reason-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .reason-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .reason-icon {
+            font-size: 1.4rem;
+            color: var(--primary);
+            background: rgba(255, 126, 54, 0.1);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .reason-text h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .reason-text p {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+
+        .methods-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 650px) {
+            .methods-grid { grid-template-columns: 1fr; }
+        }
+
+        .method-card { margin-bottom: 0; display: flex; flex-direction: column; }
+
+        .method-desc {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .account-box {
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .account-box { border-color: rgba(255,255,255,0.05); }
+        }
+
+        .bank-name {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .account-num {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .primary-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 6px 15px rgba(255, 126, 54, 0.3);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 126, 54, 0.4);
+        }
+
+        .qr-box {
+            background: #fff;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+        }
+
+        .qr-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #toast {
+            visibility: hidden;
+            min-width: 280px;
+            background-color: var(--text-main);
+            color: var(--bg-color);
+            text-align: center;
+            border-radius: 50px;
+            padding: 14px 24px;
+            position: fixed;
+            z-index: 999;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        #toast.show { visibility: visible; animation: toastUp 0.5s, toastDown 0.5s 2.5s forwards; }
+
+        @keyframes toastUp { from {bottom: 0; opacity: 0;} to {bottom: 40px; opacity: 1;} }
+        @keyframes toastDown { from {bottom: 40px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body>
+    <div class="blob"></div>
+    <div class="container">
+        <nav class="top-nav">
+            <a href="index.html" class="back-btn">
+                <i class="ri-arrow-left-line"></i> 포트폴리오로 돌아가기
+            </a>
+        </nav>
+
+        <header>
+            <div class="heart-icon"><i class="ri-heart-3-fill"></i></div>
+            <h1>프로젝트 후원하기</h1>
+            <p class="tagline">여러분의 따뜻한 응원이<br>더 나은 우리말 도구와 재미있는 프로젝트를 만드는 큰 원동력이 됩니다.</p>
+        </header>
+
+        <main>
+            <article class="card" style="animation-delay: 0.2s;">
+                <div class="card-header">
+                    <div class="icon-box">💡</div>
+                    <h2>왜 후원이 필요한가요?</h2>
+                </div>
+                <ul class="reason-list">
+                    <li class="reason-item">
+                        <div class="reason-icon"><i class="ri-book-open-line"></i></div>
+                        <div class="reason-text">
+                            <h3>자료 연구 및 새로운 프로젝트 준비</h3>
+                            <p>우리말 연구에 필요한 서적을 구하거나, 새로운 프로젝트를 준비하기 위한 환경을 구축하는 데 소중히 사용됩니다.</p>
+                        </div>
+                    </li>
+                    <li class="reason-item">
+                        <div class="reason-icon"><i class="ri-battery-charge-line"></i></div>
+                        <div class="reason-text">
+                            <h3>지속 가능한 창작 활동</h3>
+                            <p>창작자가 지치지 않고 꾸준히 양질의 콘텐츠와 도구들을 만들어낼 수 있도록 에너지를 충전해 주세요.</p>
+                        </div>
+                    </li>
+                    <li class="reason-item">
+                        <div class="reason-icon"><i class="ri-open-source-line"></i></div>
+                        <div class="reason-text">
+                            <h3>오픈소스 기여 및 유지보수</h3>
+                            <p>대가 없이 공유되는 결과물들이 앞으로도 계속 유지되고 발전할 수 있도록 하는 큰 동기부여가 됩니다.</p>
+                        </div>
+                    </li>
+                </ul>
+            </article>
+
+            <div class="methods-grid">
+                <article class="card method-card" style="animation-delay: 0.3s;">
+                    <div class="card-header">
+                        <div class="icon-box">🏦</div>
+                        <h2>계좌 송금</h2>
+                    </div>
+                    <p class="method-desc">은행 앱을 통해 직접 후원금을 보내주실 수 있습니다.</p>
+                    <div class="account-box">
+                        <span class="bank-name">토스뱅크 (예금주: 윤하진)</span>
+                        <span class="account-num" id="accountNum">1001-1723-3579</span>
+                    </div>
+                    <button class="primary-btn" onclick="copyAccount()">
+                        <i class="ri-file-copy-line"></i> 계좌번호 복사하기
+                    </button>
+                </article>
+
+                <article class="card method-card" style="animation-delay: 0.4s;">
+                    <div class="card-header">
+                        <div class="icon-box">📱</div>
+                        <h2>QR 간편 송금</h2>
+                    </div>
+                    <p class="method-desc">카메라 앱이나 토스 등의 스캔 기능으로 간편하게 송금해 주세요!</p>
+                    <div class="qr-box">
+                        <img src="qr-image.jpg" alt="송금 QR 코드" class="qr-image">
+                    </div>
+                </article>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast"><i class="ri-check-line"></i> 계좌번호가 복사되었습니다!</div>
+
+    <script>
+        function copyAccount() {
+            const accountNumber = "1001-1723-3579";
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(accountNumber).then(showToast);
+            } else {
+                let textArea = document.createElement("textarea");
+                textArea.value = accountNumber;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                textArea.style.top = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast();
+                } catch (err) {
+                    alert("계좌번호: " + accountNumber);
+                }
+                textArea.remove();
+            }
+        }
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            if (window.toastTimeout) clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
